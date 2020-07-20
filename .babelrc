@@ -1,0 +1,5 @@
+// 配置⽤于转化当前代码的规则集
+{
+    "presets": ["es2015"],
+    "plugins": ["transform-object-rest-spread"]
+}

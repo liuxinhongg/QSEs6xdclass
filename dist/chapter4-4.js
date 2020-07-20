@@ -1,0 +1,122 @@
+'use strict';
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+/* es6和es8的新特性和新增的方法*/
+// 扩展运算符在对象中的使用
+{
+    // 1、复制对象
+    //安装一个插件 npm i babel-plugin-transform-object-rest-spread
+    // 然后在babelrc中配置 "plugins": ["transform-object-rest-spread"] 
+    // "plugins": ["transform-object-rest-spread"] 
+    /*
+    const obj = { name: 'lxh', video: 'es6' };
+    let videoObj = {...obj };
+    console.log(videoObj);*/
+    //2、给对象设置默认值
+    /*
+    const obj = { name: 'lxh', video: 'es6' };
+    let objfz = {...obj, name: "刘新红" };
+    console.log(objfz); //{name: "刘新红", video: "es6"}
+    */
+    //2、合并对象
+    var obj = { name: 'lxh', video: 'es6' };
+    var initObj = { color: "red" };
+    var objconnect = _extends({}, obj, initObj);
+    console.log(objconnect); //{name: "lxh", video: "es6", color: "red"}
+    //坑点
+    // 对象里面包含对象
+    // 简单类型的可以用扩展运算符，但是如果扩展运算符展开对象以后，还是一个对象，我们复制的只是一个指针
+}
+// es6提供写的书写方式
+{
+    var name = "小红";
+    var age = 18;
+    //es5的写法
+    var es5obj = {
+        name: name,
+        age: age,
+        sayHello: function sayHello() {
+            console.log("this is es5obj");
+        }
+        // es6的书写
+    };var es6obj = {
+        name: name,
+        age: age,
+        sayHello: function sayHello() {
+            console.log("this is es6obj");
+        }
+    };
+    console.log('es5', es5obj);
+    console.log('es6', es6obj);
+    es5obj.sayHello();
+    es6obj.sayHello();
+}
+// 第二个ea6好用的地方
+//我们定义对象的时候可以直接使用变量进行定义
+{
+    var key = "name";
+    //es5
+    var _es5obj = {};
+    _es5obj[key] = '小明';
+    console.log(_es5obj); //{name: "小明"}
+    //es6
+    var _es6obj = _defineProperty({}, key, '小红');
+    console.log(_es6obj); //{name: "小红"}
+}
+// 新增方法
+{
+    //1、 Object.is()判断两个值是否相同（Nan是true）和===严格等于很类似(Nan是false)
+    var result = Object.is(NaN, NaN);
+    console.log(result); //true
+    console.log(NaN === NaN); //false
+    //2、Object.assign(目标对象，来源对象)值复制
+    var person = { name: 'lxh', age: 18, info: { height: 170 } };
+    var personOther = {};
+    Object.assign(personOther, person);
+    console.log(personOther);
+    person.info.height = 180;
+    console.log(personOther);
+}
+//Array.from()将一个类数组对象转换为一个真正的数组
+// 类数组对象有length属性、可以遍历
+{
+    var str = "hello";
+    var strlist = Array.from(str);
+    console.log(strlist); //["h", "e", "l", "l", "o"]
+}
+//2、Object.keys()遍历对象里面的所有属性名
+//  Object.values()遍历对象里面的所有属性名键值
+//   Object.entries()遍历对象里面的键值对
+{
+    var json = { name: 'lxh', video: 'es6', data: 2019 };
+    var _obj = {};
+    var _iteratorNormalCompletion = true;
+    var _didIteratorError = false;
+    var _iteratorError = undefined;
+
+    try {
+        for (var _iterator = Object.keys(json)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            var _key = _step.value;
+
+            _obj[_key] = json[_key];
+        }
+    } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+    } finally {
+        try {
+            if (!_iteratorNormalCompletion && _iterator.return) {
+                _iterator.return();
+            }
+        } finally {
+            if (_didIteratorError) {
+                throw _iteratorError;
+            }
+        }
+    }
+
+    console.log(_obj);
+}
